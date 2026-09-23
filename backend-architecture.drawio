@@ -1,0 +1,139 @@
+<mxfile host="app.diagrams.net" pages="2">
+  <diagram name="AMEX implementation" id="Current">
+    <mxGraphModel dx="1437" dy="990" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="ui" parent="1" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#dbeafe;strokeColor=#64748b;fontSize=15;spacing=12;" value="React + TypeScript UI&#xa;Prospect • Member • Small business" vertex="1">
+          <mxGeometry height="65" width="430" x="440" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="api" parent="1" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#dbeafe;strokeColor=#64748b;fontSize=15;spacing=12;" value="Backend API + request validation&#xa;JSON APIs • streamed outing progress&#xa;Consent/preferences checks • dependency injection" vertex="1">
+          <mxGeometry height="85" width="510" x="400" y="215" as="geometry" />
+        </mxCell>
+        <mxCell id="consumer" parent="1" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#dcfce7;strokeColor=#64748b;fontSize=15;spacing=12;" value="Consumer workflow (LangGraph)&#xa;Guard → retrieve → calculate&#xa;→ rank → compose" vertex="1">
+          <mxGeometry height="100" width="330" x="40" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="outing" parent="1" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#dcfce7;strokeColor=#64748b;fontSize=15;spacing=12;" value="Outing workflow (async service)&#xa;Interpret → discover → verify identity/evidence&#xa;→ enrich → route/schedule → explain" vertex="1">
+          <mxGeometry height="100" width="450" x="420" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="business" parent="1" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#dcfce7;strokeColor=#64748b;fontSize=15;spacing=12;" value="Small-business workflow&#xa;Goals → deterministic recommendations&#xa;Optional goal extraction" vertex="1">
+          <mxGeometry height="100" width="390" x="920" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="gateway" parent="1" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#dbeafe;strokeColor=#64748b;fontSize=15;spacing=12;" value="SafeChain — internal LLM access&#xa;AMEX-managed model configuration and security&#xa;Model routing + structured-output validation" vertex="1">
+          <mxGeometry height="100" width="340" x="40" y="550" as="geometry" />
+        </mxCell>
+        <mxCell id="providers" parent="1" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#dbeafe;strokeColor=#64748b;fontSize=15;spacing=12;" value="Discovery + routing integrations&#xa;Places • events • web discovery • travel estimates&#xa;Verified source evidence and freshness" vertex="1">
+          <mxGeometry height="120" width="420" x="450" y="550" as="geometry" />
+        </mxCell>
+        <mxCell id="storage" parent="1" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#f1f5f9;strokeColor=#64748b;fontSize=15;spacing=12;" value="Application and catalog storage&#xa;Customer preferences • intent • offers/benefits&#xa;Evidence and outing run lifecycle&#xa;Internal storage technology not specified" vertex="1">
+          <mxGeometry height="120" width="390" x="920" y="550" as="geometry" />
+        </mxCell>
+        <mxCell id="retrieval" parent="1" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#fef3c7;strokeColor=#64748b;fontSize=15;spacing=12;" value="Implemented retrieval capabilities&#xa;Ingestion → lexical + semantic retrieval → rank fusion → reranker&#xa;Embedding generation and grounded context preparation&#xa;Exact workflow invocation points follow the internal implementation" vertex="1">
+          <mxGeometry height="120" width="1020" x="180" y="770" as="geometry" />
+        </mxCell>
+        <mxCell id="note" parent="1" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#fef3c7;strokeColor=#64748b;fontSize=15;spacing=12;" value="AMEX implementation: SafeChain and feature completion confirmed by project owner.&#xa;Internal deployment topology, provider names and security controls are intentionally not inferred." vertex="1">
+          <mxGeometry height="65" width="1020" x="180" y="920" as="geometry" />
+        </mxCell>
+        <mxCell id="e0" edge="1" parent="1" source="ui" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;fontSize=12;labelBackgroundColor=#ffffff;" target="api" value="JSON / streamed progress">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="api" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;fontSize=12;labelBackgroundColor=#ffffff;" target="consumer" value="consumer routes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="api" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;fontSize=12;labelBackgroundColor=#ffffff;" target="outing" value="outing routes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="api" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;fontSize=12;labelBackgroundColor=#ffffff;" target="business" value="business routes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="consumer" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;fontSize=12;labelBackgroundColor=#ffffff;" target="gateway" value="interpretation / explanation">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="outing" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;fontSize=12;labelBackgroundColor=#ffffff;" target="gateway" value="realtime interpretation / explanation">
+          <mxGeometry relative="1" x="0.3714" y="-20" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="business" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;fontSize=12;labelBackgroundColor=#ffffff;" target="gateway" value="optional extraction">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1115" y="480" />
+              <mxPoint x="210" y="480" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="outing" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;fontSize=12;labelBackgroundColor=#ffffff;" target="providers" value="provider interfaces">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" edge="1" parent="1" source="consumer" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;fontSize=12;labelBackgroundColor=#ffffff;" target="storage" value="catalog + rules">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e9" edge="1" parent="1" source="business" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;fontSize=12;labelBackgroundColor=#ffffff;" target="storage" value="records">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e10" edge="1" parent="1" source="outing" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;fontSize=12;labelBackgroundColor=#ffffff;" target="storage" value="catalog / run metadata">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="Scaling discussion" id="Production">
+    <mxGraphModel dx="1400" dy="1000" grid="1" gridSize="10" page="1" pageWidth="1400" pageHeight="1000">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="SCALING DISCUSSION — VALIDATE AGAINST AMEX INTERNAL STANDARDS" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#fef3c7;strokeColor=#64748b;fontSize=15;spacing=12;">
+          <mxGeometry as="geometry" x="60" y="30" width="1220" height="65" />
+        </mxCell>
+        <mxCell id="client" value="Web / mobile clients" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#dbeafe;strokeColor=#64748b;fontSize=15;spacing=12;">
+          <mxGeometry as="geometry" x="480" y="130" width="340" height="65" />
+        </mxCell>
+        <mxCell id="edge" value="TLS + identity + tenant authorization&#xa;Load balancer / API gateway" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#dbeafe;strokeColor=#64748b;fontSize=15;spacing=12;">
+          <mxGeometry as="geometry" x="400" y="240" width="500" height="80" />
+        </mxCell>
+        <mxCell id="api" value="Stateless FastAPI replicas&#xa;Validated requests + deterministic business rules" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#dcfce7;strokeColor=#64748b;fontSize=15;spacing=12;">
+          <mxGeometry as="geometry" x="400" y="370" width="500" height="80" />
+        </mxCell>
+        <mxCell id="workers" value="Durable queue + bounded workers&#xa;Planning / ingestion • cancellation • idempotency" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#dcfce7;strokeColor=#64748b;fontSize=15;spacing=12;">
+          <mxGeometry as="geometry" x="50" y="550" width="400" height="100" />
+        </mxCell>
+        <mxCell id="db" value="Managed transactional database&#xa;Catalogs, preferences, audit records&#xa;Migrations, backups, retention" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#f1f5f9;strokeColor=#64748b;fontSize=15;spacing=12;">
+          <mxGeometry as="geometry" x="490" y="550" width="360" height="100" />
+        </mxCell>
+        <mxCell id="shared" value="Shared short-lived run/event store&#xa;Distributed quotas and coordination&#xa;Provider-specific cache restrictions" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#f1f5f9;strokeColor=#64748b;fontSize=15;spacing=12;">
+          <mxGeometry as="geometry" x="900" y="550" width="400" height="100" />
+        </mxCell>
+        <mxCell id="providers" value="SafeChain + approved integrations&#xa;Internal model access and security configuration&#xa;Discovery, routing and benefits services" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#dbeafe;strokeColor=#64748b;fontSize=15;spacing=12;">
+          <mxGeometry as="geometry" x="50" y="760" width="400" height="110" />
+        </mxCell>
+        <mxCell id="search" value="Retrieval capacity and quality&#xa;Embedding/index version management&#xa;Reranker evaluation and latency budgets" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#dbeafe;strokeColor=#64748b;fontSize=15;spacing=12;">
+          <mxGeometry as="geometry" x="490" y="760" width="360" height="110" />
+        </mxCell>
+        <mxCell id="ops" value="Operational controls across all components&#xa;Secrets • logs/metrics/traces • budgets&#xa;Load/security/live tests • staged rollout" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#fef3c7;strokeColor=#64748b;fontSize=15;spacing=12;">
+          <mxGeometry as="geometry" x="900" y="760" width="400" height="110" />
+        </mxCell>
+        <mxCell id="e0" value="" edge="1" parent="1" source="client" target="edge" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;fontSize=12;labelBackgroundColor=#ffffff;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e1" value="" edge="1" parent="1" source="edge" target="api" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;fontSize=12;labelBackgroundColor=#ffffff;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e2" value="submit work" edge="1" parent="1" source="api" target="workers" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;fontSize=12;labelBackgroundColor=#ffffff;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e3" value="" edge="1" parent="1" source="api" target="db" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;fontSize=12;labelBackgroundColor=#ffffff;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e4" value="progress / run lookup" edge="1" parent="1" source="api" target="shared" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;fontSize=12;labelBackgroundColor=#ffffff;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e5" value="bounded calls" edge="1" parent="1" source="workers" target="providers" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;fontSize=12;labelBackgroundColor=#ffffff;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e6" value="retrieval when explicitly wired" edge="1" parent="1" source="workers" target="search" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;fontSize=12;labelBackgroundColor=#ffffff;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
