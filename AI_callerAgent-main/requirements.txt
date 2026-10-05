@@ -10,6 +10,166 @@ livekit-plugins-noise-cancellation>=0.2.0,<1.0.0
 python-dotenv~=1.0
 
 
+ What is that meaning of blue and green? Uh, what does that color code signify? What is post CC?
+
+What is that? What is that in green and blue? Oh, okay. Um, we have two products we offer within Genesis and Cedric. Um, and we weren't sure which one you're asking about. So we answered about both and separated with colors. So the green one post is the post call compliance check. After the calls were done, we we get the all the we get the audio, we do the transcript and we check against specific scorecards that are calibrated with you and the blue one. Uh, a real time agent assist. That's the widget where we connect to the, we get the stream live while you talk and there's a checklist and a script for the agent to follow. So we weren't sure what you're asking about. So we answered about both. Sorry. Okay. Okay. Now it makes sense. Thank you. So, Natasha, I think we are looking at rt a product from Cedric, correct?
+
+I was saying that probably for this scope, it's going through historical recordings, getting it and using it is what the scope is for this year. Next year onwards is something which is more real time that we are looking forward. So I believe it's both the products will be applicable. Uh, to us.
+
+
+So they are both these products and the infrastructure. They are posted in AWS in which region?
+I'm sorry. We're talking about the post, right? That's what was decided. Both and post. Okay. So the post is in US East one in AWS and the RT. A is in US East, two.
+Related. Party A is in us. Institute.
+
+Okay. Our Genesis infrastructure is in US East. One.
+It doesn't it doesn't affect us. It's fine. Okay, so regarding the connection handshake, uh, you mentioned five seconds timeout for RT, a so what is the retry? Mechanism? If in case, uh, there is a connection lost, what is the retry mechanism? Is there any from, uh, RTA standpoint flat? Can you.
+
+
+Yeah. Uh, well, basically, uh, Genesis is the one who initiates this connection. So retry the day side, not on our side, because it's a webhook communication.
+I hope it's resolves the in.
+Okay, so you're saying Genesis is the one who initiates the connection. And if in case there is a retry timeout, Genesis should retry that connection. Yeah.
+
+All right. Uh, now regarding the compatibility for codecs, you have mentioned that, um.
+
+ You mentioned codec PCM. You new law. Uh. 8000 sample rate. Our entire Genesis infrastructure for all the markets. It's using opus right now. So how will that interoperability be set up? Does it require any kind of a middleware or the, uh, Cedric side transcoding will be, taken care.
+Uh, I cannot directly answer you at the moment, but I think we can we can check this and come back with answers, but I'm almost sure that it will not be a problem to handle different codec on our side. But again, we need to verify this. But I don't think you will need any kind of middleware or stuff like that.
+
+Okay. Yeah. If you can, because that is, uh, very important as a design consideration as well. If they interoperability is there is handled at.
+
+Uh, Cedric end then yeah, we don't require a middleware, but if not, then we would need some kind of a transcoding, uh, for the interoperability of codecs. Right? Yeah. I will check this. I will add to my notes and will answer you later.
+
+Okay, okay. So are we doing some notes somewhere? Somebody I think capturing all the notes right from the side. So that it can have.
+A recap of like, what we discussed. And then, uh, any follow up questions after that? Yeah.
+
+Is someone taking notes? Yeah, exactly. That's what I wanted to make sure.
+I'm capturing a few things on my side. Natasha. Is this. I mean, I'm not sure if you're able to record as well. Um, just in case I can capture. Yeah, I can, I can certainly record, I suppose, you know, I mean, my team are happy to assist with capturing notes, but obviously this is more of a technical conversation. Uh, so I, I would suppose I'd lean on like Srikanth and ravish your teams, right? To make sure you're capturing it in the correct language. Um, yeah. So I think this is, yeah, this is very technical. No worries. Yeah. I think we will have.
+Can capture all the questions and answers that we are doing. And then we can share that because like, you know, if there is a question from my team, I think we can consolidate all of them together and send it across. Yeah, that means you can share me the questions and answers that we have that then I can, um, send it across to no worries. Yeah, yeah. Anyways, I'll take it. I think. Yeah. Thank you.
+
+So that was the, the big one actually, uh, because, uh, the codec interoperability. Besides what architecture are we going to implement? Okay. Now, uh.
+
+I was hoping that you can share the reference architecture and implementation guide from Cedric standpoint as well. For, uh, both RT and post PC, at least from an integration standpoint. Okay. I, uh.
+I do have the, uh, integration architecture, which is, and the.
+Configuration steps, which are there for us on Genesis cloud standpoint, but just want to understand if there is anything else, which is expected from Genesis standpoint. Uh, for Cedric.
+So like, what is your like, uh, playbook? Uh, when you start integrating with, Genesis, right from Cedric team, do you have like a, like a.
+Instructions or like a workbook where any customer or client can put through all the steps so that the integration is established between Genesis and Cedric.
+Okay, I. Think I'm not sure if you are talking. So. Okay. Sorry, just just.I apologize if this is my lack because I appreciate this is very technical presentation. I just want to make sure I understand. So we are we saying high level.
+Be. Getting the Genesis audio hook license and Cedric would be. That's how the connection to Genesis and Cedric would work. Super high level conceptually. Is that what we're saying? That is right. Okay. So what. Okay, so and then what we're saying is, and I think you've had experience with integrating with Genesis before, I assume from the Cedric side, um.
+That is, I assume, relatively straightforward. Um, in terms of how you use that audio hook, I suppose it's.
+So it's a, from, from what I understand and maybe you would be the right person to answer this from an AI standpoint. Genesis will initiate an HTTPs, get request and switch to WSS protocol and will send the, uh, session information and the media format to Cedric. And that's where the Cedric Cedric would response with a WebSocket and have a TLS or TCP handshake. Correct.
+Yeah. It works. Something like this. Yeah. Right. Um, and maybe one more point relevant. Um, we also listened to another webhook. Um, to track, uh, agents activity. So this is why we understand. Which engine is connected to, to the call which we receive from Genesis.
+
+We basically have two web box. We have two webhooks set up with Genesis. The audio webhook, which gives us the actual audio conversation ID and some data about the customer and the state of the call. Start stop, pause, end.
+In a very high level. But there's but we don't know the agent. We don't know that it's you that's talking. So we can't map it. We can't put it in your widget and we can't do anything with it. So there's another webhook within Genesis. The notifications API.
+Which has the connection happens. According to the conversation ID. And then we get from their. Sorry, I'm a little sick. The agent info and a little bit extra metadata about the call. That's it. Got it. So basically, like you described, it's just two webhooks and not one. Okay. So one, a book about that conversation ID, I mean, all that conversation details, right? And then one about the agent book. So.
+
+So how do you link both of them? I mean, in terms of data, right? Agent data, like what do you expect in the agent webhook?
+
+Yeah. We use conversation. It's correlation ID.
+So you'll be streaming listening to them in parallel, like.
+
+Okay. So can you share like what data is being streamed into both of the webhooks?
+
+Um, which conversation?
+Which are we talking about now? Because.
+Of them, the, the one, the audio, both of them. Yeah. The audio hook that you would have with the, you know, uh, for each conversation and then the agent hook, like, what is the data? What is the kind of data? Can you share that?
+Yeah. So my, oh, I was going to jump in here. I think it'd be better if we do provide some guides basically on the integration. That's what. Yeah, yeah. Okay. I think I'm hearing that. So yes. Yes. We don't have any document any details about this integration. So we are struggling to understand how this integration would work. Sure, sure. We have some internal, uh.
+
+I need to ask questions to genesys team on architecture and integration
+
+Basic paperwork one pagers. We'll surface it to you. Yeah. Um, specifically, what kind of you mentioned two webhook. So what kind of APIs would be if that document mentions that? Yeah, that would be very useful for us for the initial setup. And to understand how it's, how it's working.
+Okay. Uh, so coming back to our, um, the reconnection time out there. So if say, for example.
+The audio is getting buffered real time to Cedric and after a certain time there is a connection error between Genesis or, or a brief glitch between Genesis and Cedric. Right. So.
+What happens to that call the Cedric support seamlessly.
+Connection and stitch the buffered audio into the same interaction. What happens to that? That audio, which is missed during that time. Yeah. As I mentioned before, um, audio webhook is, uh, it's actually triggered and initiated by Genesis. So every retry and stuff like that is on Genesis. And to restrict the data. Uh.
+
+Still use, um, conversation ideas, correlation ID. So once they establish it, we use it as correlation ID to continue the call. So is it like what happened to the buffered audio? We don't get it. It's lost because we didn't get it in the stream is live.
+
+its sedric team who is integrating with genesys
+
+Okay, okay. So that part would be missed. Yes.
+
+Um. So how would you what is the. How are you reacting to that? Like, you know, you just ignored that part of conversation and just, uh, move on to the next conversation. We just have, since it's the real time agent assist. We just have a blank part of audio in that conversation. Let's say we're talking now our conversation ID is one two, three. We're talking. The widget is streaming, everything is working. Then the connection is dropped for five seconds. But then Genesis reconnects it. So I we get the same ID one, two, three. So we know to connect it. So you as the agent will continue getting the audio in the widget. But the five seconds that were dropped will not show in the transcription. Got it. So I mean, one question I had is like, we are talking about like one call here, but there are like so many conversations happening in parallel, right? So. This audio hook will.
+Receive, I mean, how, how does it I just want to understand, like there are like multiple listeners on your end or like, what does it, how does it work?
+
+Yeah, of course, we have load balancing and a lot of instances, it's not handled by a single instances instance. So yeah.
+
+So you have multiple instances listening to this. Um.
+Audio is Genesis. Like streaming.
+Uh, and I think that, uh, sorry for chiming in. And you can see it in the reference, uh, architecture that we've sent. Uh, we use obviously, uh, managed Kubernetes, uh, with a load balancer that can actually auto scale the instances. And so, and I think that these questions we shared before, and we can share also offline, uh, just to keep this forum very, um, let's say effective. Yeah. Um.
+
+Also the documentation, you can see we use Fargate with a load balancer with an auto scaling policy. And uh, yeah.
+ So the only thing I'm in, my concern is like around even with this distributed architecture of you having the multiple nodes and load balancer and all of that. How is that auditability and observability and monitoring, for example, there are like hundreds, hundreds of calls are managing, right? Maybe I think like there are 10,000 calls. You are simultaneously. Uh, listening and streaming to that and maybe like 500 of the calls had the connection issues and others do not have the connection issues. So what is where are you doing this observability and monitoring and you are, how would we know that? How would mm would know that there was a connection interruption for this. This is calls and these calls were incurred like what is where is this observation and monitoring available when we are scaling across multiple calls.
+
+And to add on to that, uh, is there a maximum concurrent audiobook sessions? With Cedric?
+Is there a connection? Is there a maximum call duration throttling limits? All. That setup on, uh, Cedric side or what are your limits? Of the system? I know you mentioned last time there is there are no limits to understand the load testing. Yeah. Yeah, sure. So guys, we we haven't hit the limits and we don't have a fissure official limits. However, obviously there are limits. Uh, it's not something that we currently hit and expected to hit. So I think that if you want to have specific load tests being done, you can share your load. And we can simulate it in a production environment to make sure that we can actually accommodate to your needs. Um, same. I think goes to Genesis. Um, so it depends both on the Cedric side and the, obviously the Genesis integration and as far as the observability, so everything obviously is logged to Corelogic's and CloudWatch and all of these events are, are logged. Now we don't show this specific information in the UI. However, we can extract reports for your integration team to have a deeper, let's say, technical analysis on the quality of the conversation. So the user doesn't really, you know, is not interested in the in this conversation. There were two seconds that were missed, but this data is logged and we can share it in our reports.
+
+Got it. So that is something you can share with Amex. Like, you know, we have our own, uh, you know, support team and management team. Uh, who are expected to ensure that all this entire application flow or data flow is going as expected. So we need to be, as an application, right? I know like Cedric, definitely everything, but from my side, we are responsible for ensuring, uh, the, you resiliency of the systems, right? And also the scalability of the systems. So think like a partnership between our technology team and your team. So you need to share that reports and data with Amex. Uh, so that that can be, you know, understood by the tech team and see where the challenges and how we can address that. Makes sense. I agree with you.
+
+Okay. So that is something you said, like it's available in CloudWatch and all of that, that that's something can be shared by, uh, Cedric team like, uh, daily basis or what is it like?
+
+Uh. So again, this is not a report that we're currently generating, generating about the mist, uh, number of seconds. We didn't have this interest. It is something that is being logged in our log system. It's a CloudWatch and Corelogic's. And we can extract this information for you. And I think what we can do is expose an API or SftP for the report. So you can either call it on demand or schedule. So we can decide over where you want to, um, get the information on the quality of the, the conversation.
+That currently do with Genesis today?
+
+Do we track these sorts of things? Yeah. The speech to text. I mean, I will tell you where we had a challenge. I think Ramesh knows more because closer to the tissue, uh, we were trying to measure the, the time it's taken for speech to text and all of that. And there were challenges that, uh, we couldn't measure the time activity. And then Genesis has to share that, uh, logs or times much later, right? When you can bring up that, right. Especially the observability and monitoring has played a crucial role. When we found latencies and issues much later when it is rolled out to production. So we want to address those issues early, like so that, uh, we have an understanding what are the logs and monitoring capabilities that we have in place in case we ran into any issue or latency issues and all of that.
+
+Yeah. But the speech to text is a different metric than I actually the latency, that's an example for Natasha. Just she asked, like, if you ran into similar kind of issues with Genesis, I'm talking, Genesis, which.
+
+I suppose like where I'm where I suppose where I'm coming from is I just,
+If we are getting this information, are we are, are we asking anything in addition to what we get from Genesis today? Um, because obviously Cedric is providing a service. We're still using Genesis as our telephony system. Yes. Right. So I just, I just want to make sure, and again, this might be because of my lack of understanding that we have to see that.
+
+That responsibility ends, right? Genesis. Is responsible for the audio calls and everything. And then the audio streaming is happening through the webhook. So. Like, I think that is where Ravi and team are helping us, right? They are, they are trying to understand how this integration between Genesis and Cedric works. And what are the terms and conditions, right? Like ensuring that, uh, because both are like vendors to. MM. We need to ensure that, uh, the connectivity because the big challenge we saw with Genesis, to, I'll be honest with you, the biggest challenge there was like two, two vendor applications, two SaaS based applications talking to each other and Amex doesn't have the visibility into what is happening there. For example, Genesis and Salesforce was talking to each other and there were issues with that. And like we, we didn't have the visibility, into what is happening there. We had asked these teams to share the logs and reports and everything. So we don't want to end up into the same situation here. Lessons learned. So we want, uh, the integrations to be like more transparent and the logs and observability of all of it is being shared with Amex so that we get to know if there is any issue in production.
+Yeah. And yeah, and we will share whatever information of the quality of our processing from our end, we will share, uh, this data will be available for you guys. Okay.
+Yeah. You got the idea, right? I mean, why I'm. Yeah, yeah. No. Yeah, yeah, I totally got the idea. I suppose. Um, I suppose it's just like, kind of circling back to the purpose of the conversation. Right. Which was around the audio hook. Integration and what the next steps are there. I think we need to, of course, document all of the additional reports and expectations from Cedric that we need, um, uh, looking at all of the documents and all the approvals we're going through, you know, I'm quite confident, you know, like that's quite clearly laid out. So I just want to make sure we're focusing on the purpose of the conversation, right. Um.
+
+So we're making the best use of everybody's time. Yeah. And if we can answer things offline, then like happy to, you know, work with Laura to answer those questions offline. Okay. That's fine. Yeah.
+Okay. So, uh, coming back to audio hook monitor. So audio hook will using the audio will stream the real time audio for the calls to Cedric.
+Will the audio recordings be stored at Cedric and.
+Do you want me to take it? Yeah, but sorry again, Tim. I want to be efficient. Uh, I think that we shared it both in the documentation and the questions that you answered. So. So I'm trying to figure out if maybe you want to take the time, go through the materials, uh, and then see if you want to, to revisit this meeting. No, I did, I did go through the material and it's right in front of me. So, uh, audio hook will store the recordings now from where I'm coming from is each of our markets. They have their different requirements for especially, you know, certain European markets. They have their different requirements for retention. So say, for example, Germany, it has a requirement to store the audio for 90 days. And post that the audio is completely.
+Moved from Genesis Cloud. The corresponding transcription is also completely removed from cloud and same is being done on our Salesforce end. So can that. I mean, that has to be established on Cedric's side as well. So that we purge all the information, the audio, the corresponding transcript, everything for Germany market for, uh, after 90 days of that particular conversation and for other markets right now, it's 730 days. It might change later on if anything changes from compliance standpoint. So how will Cedric.
+Uh, firstly, if that is doable from Cedric side. Secondly, how Cedric has that capability to understand that this is a German tagged. Transcript and a German tagged audio. And they would be able to identify from all the audio recordings, they would be able to identify and be able to purge it accurately as per the stipulated time.
+Okay, great. So, so a valid question. And, um, so a few a few steps for this and a, not with your permission, I will take it. So we, uh, we support different retention policies for, um, different configurations. So you can define it. Uh, per configuration or per unit, uh, how we actually, uh, segment it. I do want to first ask, is it like when we're receiving the conversation, we are aware that it is pertaining to Germany or is it something that we need to assume through the, throughout the conversation?
+
+So when we enable the audio hook, we enable it on a particular queue level. Uh, from Genesis Cloud and Germany, or for that matter, any market will have their own separate queues. And it will be an identifier on the queue regarding the market. Yeah. So, so yeah, so this is supported. Uh, I do want to mention to, to Tash here that, uh, if we actually remove the conversation, uh, so I assume we're obligated also to remove any transcript and analysis that we have done to that conversation. So it's essentially, removing all of the data and it will not. So it won't be accessible after these, uh, three months and you won't be able to actually, uh, fetch it in. Cedric. It will probably propagate to your ticket. Management system, but. Cedric. Neither the post nor the real time.
+
+So, I mean, I would say is we should defer to what's mentioned in the master service agreement. And obviously adhere to data purging rules.
+
+Yeah. Just in terms of, uh, the value for from the app, uh, people who are listening to calls or analyzing calls in Germany have only 30, 90 days to you said 30 or 90, but X amount of days to actually, uh, have access to the data. And afterwards we will destroy it across the Cedric. Uh, different storage mechanism, both the transcript, the audio, the analysis results, if that is, if that is a regulatory requirement for Germany, then yes, of course it will be applicable for any system within Salesforce, any system will, will adhere to the same regulations. Right. That that's just that's a standard requirement, right? From technical products. My, my understanding would be.
+Yeah. And we'll make sure we provide that as well, right? Because we have specific. Yeah. Okay. And it's 90 days for Germany and for the rest of the markets. It's currently 730 days. Yeah. Great. It's configurable. So, uh, you can just let us know and we can also, uh, change it over time.
+Yeah, that is good because there is something which I was concerned about. And, uh, also there is a requirement specifically for Germany again. Uh.
+
+Customer can reach out to American Express and request for a certain audio recording and the corresponding transcription to be deleted on demand basis.
+So essentially, um, if you have an ID that we can reference when you send us the, the data, then we can reach this ID and delete it. So you need to actually have obviously not the customer's ID, but uh, ID that you guys attach. Uh. Exactly. Perfect. So, uh, if you, provide this to us, we can delete the data. Yes.
+
+I think maybe what would be helpful is for each market review, should we know that there's very specific requirements if we write those out and then we can share with the Cedric team. Um, because there's going to need to be like a support operational process in the background, right? To make sure that this happens, which of course will work through, um, uh, my only caveat is if you've got any more questions on Germany, we have really complex workers councils there. This is going to be at the end of the roadmap, because I know it's a bit more complex. Um, so.
+Maybe we just park any more German specific questions that we can just get that down on paper and then share with the team offline.
+
+That's okay. Uh, no more questions. I think that that was that was it. Regarding the recording, uh, for Germany. Specific. Now, uh, another question. So the, the.
+
+Recording, which is being sent from Genesis Cloud to Cedric, will that be encrypted?
+On rest on Cedric and on flight. While it's moving from, Genesis to Cedric.
+
+Okay. And what about the transcriptions?
+Also encrypted. Both at rest and at flight.
+
+To if you can share some more details in terms of where is the server, what kind of encryption is being used? Because. And what format? Probably Genesis recording would be a specific format. And, uh, I believe, uh, we are dropping it into an SftP or and that's where, uh, Cedric will pick it up to the, uh, transcription. And then further processing around it. Right. So.
+
+So. Again, I think we also sorry, guys, I'm saying it several times, but I think we also mentioned it in the architecture. You can actually. If it's missing, missing over there just for us to learn, we'll add it. So you can show me where it's missed. I think we did provide this information already. Uh, we use AWS KMS. Uh, service for the encryption. And you get, you get your own key, which is rotating according to the AWS standards. Um.
+Yeah. And, uh, so the SftP is also using KMS. Um, so I'm not sure, but that I answered all of your questions though.
+
+Yes you do. Thank you. Okay. Yes. So yeah, sorry, as the so a lot of these questions actually are part of the team and the privacy processes review, which Cedric have provided us with those answers. Um, so.
+If you need additional reassurance, um, we can definitely share with you those specific requirements and requests.
+Uh, Natasha probably those documents and, uh, are with you if you can share it and send it across because I'm yet to go through those documents that have been shared by several. Yeah, that of course I will do. I just want to be this is something I think. Let's try and be very, uh, specific on what we're trying to solve for here. Privacy risk and all of that. We've got a separate process for and we can share those documents. Like I'm really keen to focus this conversation on the kind of the discovery of the audio hook and the technical aspect of it, just so we can, you know, because I know Ravi, you mentioned, you know, we, we should be looking to start some of this work this year so we can hit our timeline. So I'm really keen to, um. Focus more.
+On that. And obviously, like, we've got a lot of the Cedric team here. So I just want to make sure we're using their time as best as best as possible. I heard that Natasha probably will read what we can do.
+Is we can share those documents. Uh, what you proceed, we will again, if there are any follow up questions, we can ask those questions. There. But as of now, if our scope is just to enable, uh, from.
+A offline. Submission of those recordings on separate. To start work. If that's the scope of the POC, then we look forward in terms of, uh, there would be what's the ACL which is required between the two setup? Um, and what is the, uh, the process?
+That would be followed in terms of dumping those recordings and those, uh, S3 buckets, which.
+
+So it's a proof of concept. The offline files. So that was not the scope of this call, right? So we are managing that. Alex is working with the relevant teams. We're getting the relevant Pra's, etc.. This was to, to focus on and it was at Ravitch's request to talk about the audio hook integration, which we will launch in Q1 2027, because I know you guys had some questions on, um, you know, the. How that will actually work. So yeah, proof of concept we're managing well, we don't. I don't think we should. Um, I don't think we need to discuss that here. I think it's more about. Right. Okay. Right. So tomorrow we're going to build it. I know that's coming soon or whatever. Like what, what do we need to do? Is there any concern or of are there any questions from your end which would stop this build? And I would say the same from a Cedric side. Like, what do you guys need from us? Also?
+Yeah. Go ahead. I was just going to tap in our team as well. Just so if there were any questions as far as discovery session, if there's anything that we need to outside of what we provided, if there was any questions from Cedric team to the team, this is like the forum for that moment. Yeah, I think most of my questions are answered. Uh. Um.
+Barring what we need. Regarding the codec interoperability, that is, uh, the big one, which has to, uh, be.
+Shared. And, uh, then, uh, yeah, regarding the transcriptions, recording policies. There are no official limits. Uh, for, uh, load and, uh, yeah, buffered audio gets missed. Blank part. Yeah, probably. These two are pending as of now, the codec. Uh, answers and the documentation, if you can share with us. Yeah, that would be great. And, uh, for now, I'm good.
+Thank you. Just one thing, if I may ask. Yeah, just to make sure I understand correctly. We're planning on starting with actually the post at the end of Q4, right? Yep. And Q1 is the real time.
+
 
 
 
